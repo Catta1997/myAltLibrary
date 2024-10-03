@@ -20,7 +20,7 @@ jobs:
         run: python update_json.py  # Replace with your script name
 
       - name: Commit changes (if any)
-        uses: Endurant/commit-action@v2
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           message: "Update JSON with latest app version (if changed)"
           branch: main  # Adjust the branch name if necessary
