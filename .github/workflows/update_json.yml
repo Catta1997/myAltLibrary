@@ -31,7 +31,7 @@ jobs:
         with:
           title: "Update JSON with latest app version"
           body: "Automatically updated JSON file with latest app information."
-          branch: main  # Adjust the branch name if necessary
+          branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
         # Uncomment the following line if you want automatic pull request creation
         # if: steps.commit.outputs.committed == 'false'
