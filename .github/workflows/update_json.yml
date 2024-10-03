@@ -1,6 +1,7 @@
 name: Update JSON File
 
 on:
+  workflow_dispatch:
   # Schedule: Run the workflow daily at midnight (UTC)
   schedule:
     - cron: '0 0 * * *'
