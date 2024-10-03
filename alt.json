@@ -18,6 +18,15 @@
             "iconURL": "https://static.wikia.nocookie.net/pokemongo/images/3/31/AppIcon_Season_16_Max_Out.png",
             "tintColor": "#e34222",
             "appPermissions": {
+                "entitlements": [
+                    "com.apple.security.application-groups",
+                    "com.apple.developer.healthkit",
+                    "com.apple.developer.associated-domains",
+                    "com.apple.developer.healthkit.background-delivery",
+                    "aps-enviroment",
+                    "com.apple.developer.healthkit.access",
+                    "com.apple.developer.applesignin"
+                ]
                 "privacy": {
                     "NSBluetoothAlwaysUsageDescription": "Allows pairing to devices including peripherals and consoles.",
                     "NSLocationAlwaysUsageDescription": "Set your device’s location permissions to Always to collect Candy, hatch Eggs, and earn rewards—even when Pokémon GO isn’t open!",
