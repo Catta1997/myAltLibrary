@@ -26,7 +26,7 @@
                     "aps-enviroment",
                     "com.apple.developer.healthkit.access",
                     "com.apple.developer.applesignin"
-                ]
+                ],
                 "privacy": {
                     "NSBluetoothAlwaysUsageDescription": "Allows pairing to devices including peripherals and consoles.",
                     "NSLocationAlwaysUsageDescription": "Set your device’s location permissions to Always to collect Candy, hatch Eggs, and earn rewards—even when Pokémon GO isn’t open!",
