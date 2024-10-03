@@ -1,0 +1,31 @@
+{
+    "name": "iPoGo",
+    "subtitle": "All my apps in one place.",
+    "description": "Welcome to my source! Here you'll find all of my apps.",
+    "iconURL": "https://static.wikia.nocookie.net/pokemongo/images/3/31/AppIcon_Season_16_Max_Out.png",
+    "headerURL": "https://static.wikia.nocookie.net/pokemongo/images/3/31/AppIcon_Season_16_Max_Out.png",
+    "tintColor": "#4185A9",
+    "featuredApps": [
+        "com.nianticlabs.pokemongo"
+    ],
+    "apps": [
+        {
+            "name": "iPoGo",
+            "bundleIdentifier": "com.nianticlabs.pokemongo",
+            "developerName": "Niantic",
+            "subtitle": "An awesome app.",
+            "localizedDescription": "This is an awesome app only available on AltStore.",
+            "iconURL": "https://static.wikia.nocookie.net/pokemongo/images/3/31/AppIcon_Season_16_Max_Out.png",
+            "tintColor": "#5CA399",
+            "versions": [
+                {
+                    "version": "0.333.0",
+                    "date": "2024-10-03",
+                    "size": "20000000",
+                    "downloadURL": "https://ipogo.app/download/ipogo-3.5.6.ipa",
+                    "minOSVersion": "12.0"
+                }
+            ]
+        }
+    ]
+}
