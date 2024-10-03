@@ -17,7 +17,7 @@ jobs:
         run: pip install requests beautifulsoup4
 
       - name: Run Python script
-        run: python update_json.py  # Replace with your script name
+        run: python json_analyze.py  # Replace with your script name
 
       - name: Commit changes (if any)
         uses: stefanzweifel/git-auto-commit-action@v5
