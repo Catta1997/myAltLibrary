@@ -21,7 +21,7 @@ def getlink() -> json:
             myjson= {}
             myjson['version'] = vers
             myjson['date'] = date
-            myjson['size'] = "20000000"
+            myjson['size'] = 146000000
             myjson['downloadURL'] = mylink
             myjson['minOSVersion'] = "12.0"
             return (myjson)
