@@ -23,7 +23,7 @@ def getlink() -> json:
             myjson['date'] = date
             myjson['size'] = 146000000
             myjson['downloadURL'] = mylink
-            myjson['minOSVersion'] = "12.0"
+            myjson['minOSVersion'] = "15.0"
             return (myjson)
 
 def json_upd(jsonfile):

@@ -17,32 +17,32 @@
             "localizedDescription": "This is an awesome app only available on AltStore.",
             "iconURL": "https://static.wikia.nocookie.net/pokemongo/images/3/31/AppIcon_Season_16_Max_Out.png",
             "tintColor": "#e34222",
+            "appPermissions": {
+                "privacy": {
+                    "NSBluetoothAlwaysUsageDescription": "Allows pairing to devices including peripherals and consoles.",
+                    "NSLocationAlwaysUsageDescription": "Set your device’s location permissions to Always to collect Candy, hatch Eggs, and earn rewards—even when Pokémon GO isn’t open!",
+                    "NSCameraUsageDescription": "Enabling this setting allows you to use AR when catching Pokémon.",
+                    "NSUserTrackingUsageDescription": "If you enable this setting, your information can be used to deliver personalized ads to you regarding Pokémon GO exclusive offers, promotions, and events.",
+                    "NSBluetoothPeripheralUsageDescription": "Allows for usage of the Pokémon GO Plus",
+                    "NSPhotoLibraryAddUsageDescription": "In order to save pictures of encountered Pokémon",
+                    "NSMotionUsageDescription": "Pokémon GO requires your mobile device’s motion permissions to be enabled in order to let you know when new Pokémon are nearby.",
+                    "NSHealthUpdateUsageDescription": "Pokémon GO needs your activity data to hatch Pokémon eggs, help your Pokémon find candies, and display total distance walked.",
+                    "NSHealthShareUsageDescription": "Pokémon GO needs your activity data to hatch Pokémon eggs, help your Pokémon find candies, and display total distance walked.",
+                    "NSCalendarsUsageDescription": "In order to add Live Event calendar items",
+                    "NSMicrophoneUsageDescription": "not used",
+                    "NSLocationWhenInUseUsageDescription": "Pokémon GO requires your mobile device’s location permissions to be enabled in order to find Pokémon and PokéStops near you.",
+                    "NSLocationAlwaysAndWhenInUseUsageDescription": "Set your device’s location permissions to Always to collect Candy, hatch Eggs, and earn rewards—even when Pokémon GO isn’t open!",
+                    "NSContactsUsageDescription": "Pokémon GO needs to access and upload your contacts to our servers to send game invites and friend requests to people in your address book.",
+                    "NSPhotoLibraryUsageDescription": "In order to save pictures of encountered Pokémon"
+                }
+            },
             "versions": [
                 {
                     "version": "0.333.0",
                     "date": "2024-10-03",
                     "size": 146000000,
                     "downloadURL": "https://ipogo.app/download/ipogo-3.5.6.ipa",
-                    "minOSVersion": "15.0",
-                    "appPermissions": {
-                        "privacy": {
-                            "NSBluetoothAlwaysUsageDescription": "Allows pairing to devices including peripherals and consoles.",
-                            "NSLocationAlwaysUsageDescription": "Set your device’s location permissions to Always to collect Candy, hatch Eggs, and earn rewards—even when Pokémon GO isn’t open!",
-                            "NSCameraUsageDescription": "Enabling this setting allows you to use AR when catching Pokémon.",
-                            "NSUserTrackingUsageDescription": "If you enable this setting, your information can be used to deliver personalized ads to you regarding Pokémon GO exclusive offers, promotions, and events.",
-                            "NSBluetoothPeripheralUsageDescription": "Allows for usage of the Pokémon GO Plus",
-                            "NSPhotoLibraryAddUsageDescription": "In order to save pictures of encountered Pokémon",
-                            "NSMotionUsageDescription": "Pokémon GO requires your mobile device’s motion permissions to be enabled in order to let you know when new Pokémon are nearby.",
-                            "NSHealthUpdateUsageDescription": "Pokémon GO needs your activity data to hatch Pokémon eggs, help your Pokémon find candies, and display total distance walked.",
-                            "NSHealthShareUsageDescription": "Pokémon GO needs your activity data to hatch Pokémon eggs, help your Pokémon find candies, and display total distance walked.",
-                            "NSCalendarsUsageDescription": "In order to add Live Event calendar items",
-                            "NSMicrophoneUsageDescription": "not used",
-                            "NSLocationWhenInUseUsageDescription": "Pokémon GO requires your mobile device’s location permissions to be enabled in order to find Pokémon and PokéStops near you.",
-                            "NSLocationAlwaysAndWhenInUseUsageDescription": "Set your device’s location permissions to Always to collect Candy, hatch Eggs, and earn rewards—even when Pokémon GO isn’t open!",
-                            "NSContactsUsageDescription": "Pokémon GO needs to access and upload your contacts to our servers to send game invites and friend requests to people in your address book.",
-                            "NSPhotoLibraryUsageDescription": "In order to save pictures of encountered Pokémon"
-                        }
-                    }
+                    "minOSVersion": "15.0"
                 }
             ]
         }
