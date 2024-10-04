@@ -23,7 +23,7 @@
                     "com.apple.developer.healthkit",
                     "com.apple.developer.associated-domains",
                     "com.apple.developer.healthkit.background-delivery",
-                    "aps-enviroment",
+                    "aps-environment",
                     "com.apple.developer.healthkit.access",
                     "com.apple.developer.applesignin"
                 ],
