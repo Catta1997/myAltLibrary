@@ -14,7 +14,7 @@ jobs:
 
       - name: Install Python dependencies (if needed)
         # Adjust this step based on your actual dependencies (e.g., requests, bs4)
-        run: pip install requests beautifulsoup4
+        run: pip install requests beautifulsoup4 --break-system-packages
 
       - name: Run Python script
         run: python json_analyze.py  # Replace with your script name
