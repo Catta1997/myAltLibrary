@@ -41,6 +41,6 @@ def get_Json() -> json:
 
 jadd = getlink()
 json_file = get_Json()
-if (jadd['version'] != json_file['apps'][0]['versions'][0]['version']):
-    json_file['apps'][0]['versions'] = jadd
+if jadd['version'] != json_file['apps'][0]['versions'][0]['version']:
+    json_file['apps'][0]['versions'].insert(0, jadd)
     json_upd(json_file)
