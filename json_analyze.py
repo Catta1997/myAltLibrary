@@ -42,5 +42,5 @@ def get_Json() -> json:
 jadd = getlink()
 json_file = get_Json()
 if (jadd['version'] != json_file['apps'][0]['versions'][0]['version']):
-    json_file['apps'][0]['versions'].append(jadd)
+    json_file['apps'][0]['versions'] = jadd
     json_upd(json_file)
