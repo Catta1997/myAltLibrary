@@ -8,7 +8,7 @@ jobs:
   fetch-rss:
     runs-on: ubuntu-latest
     steps:
-      - uses: htcf/rss-feed-fetch-action@v2
+      - uses: Promptly-Technologies-LLC/rss-fetch-action@v2
         with:
           feed_url: 'http://createfeed.fivefilters.org/extract.php?url=https%3A%2F%2Fipogo.app%2F&item=div.row&item_title=small&max=5&order=document&guid=0&text_contains%5B0%5D=iOS'
           output_file: 'ipogo_feed.xml'
