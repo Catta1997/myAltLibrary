@@ -1,0 +1,7 @@
+# Config
+---
+sites:
+	- url: https://ipogo.app
+ 		editors:
+	 		- css_select: body div.page-header.header-filter div div div div small:nth-child(1)
+			- html_prettify
