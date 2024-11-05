@@ -1,13 +1,10 @@
 name: Update JSON File
 
 on:
-  push:
-      paths:
-        - 'previous_value.json'
   workflow_dispatch:
   # Schedule: Run the workflow daily at midnight (UTC)
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 */2 * * *'
 
 jobs:
   update_json:
