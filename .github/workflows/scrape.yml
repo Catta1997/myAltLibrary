@@ -23,6 +23,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           message: "Update JSON with latest app version (if changed)"
+          token: ${{ secrets.PAT }}
           branch: main  # Adjust the branch name if necessary
           push: true  # Set to false if you don't want automatic pushes
 
