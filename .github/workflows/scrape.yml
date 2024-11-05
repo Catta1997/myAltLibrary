@@ -20,7 +20,6 @@ jobs:
         run: python .github/workflows/check_version.py  # Replace with your script name
 
       - name: Commit changes (if any)
-        id: commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           message: "Update JSON with latest app version (if changed)"
@@ -28,7 +27,6 @@ jobs:
           push: true  # Set to false if you don't want automatic pushes
 
       - name: Create a pull request (if automatic push is disabled)
-        id: push
         uses: peter-evans/create-pull-request@v3
         with:
           title: "Update JSON with latest app version"
