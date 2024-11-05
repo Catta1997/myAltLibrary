@@ -34,4 +34,4 @@ jobs:
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
           run: |
-            gh workflow dispatch -y myAltLibrary/.github/workflows/update_json.yml
+            ./.github/workflows/update_json.yml
