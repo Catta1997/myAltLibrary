@@ -20,18 +20,33 @@ jobs:
         run: python .github/workflows/check_version.py  # Replace with your script name
 
       - name: Commit changes (if any)
+        id: commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           message: "Update JSON with latest app version (if changed)"
-          token: ${{ secrets.PAT }}
           branch: main  # Adjust the branch name if necessary
           push: true  # Set to false if you don't want automatic pushes
 
       - name: Create a pull request (if automatic push is disabled)
+        id: push
         uses: peter-evans/create-pull-request@v3
         with:
           title: "Update JSON with latest app version"
           body: "Automatically updated JSON file with latest app information."
-          token: ${{ secrets.PAT }}
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
+      - name: Trigger Update JSON Workflow
+
+              uses: actions/github-script@v4
+              with:
+                script: |
+                  const github = require('@actions/github');
+                  const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+                  await octokit.rest.actions.createWorkflowDispatch({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    workflow_id: 'update_json.yml',
+                    ref: github.context.ref,
+                  });
+              env:
+                GITHUB_TOKEN: ${{ secrets.PAT }}
