@@ -1,37 +1,35 @@
-name: Scrape ipogo.app
+name: Update JSON Version
 
 on:
   workflow_dispatch:
+  # Schedule: Run the workflow daily at midnight (UTC)
   schedule:
-    - cron: '0 * * * *'  # Ogni ora
+    - cron: '0 * * * *'
 
 jobs:
-  scrape:
+  update_json:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
+
+      - name: Install Python dependencies (if needed)
+        # Adjust this step based on your actual dependencies (e.g., requests, bs4)
+        run: pip install requests beautifulsoup4
+
+      - name: Run Python script
+        run: python check_version.py  # Replace with your script name
+
+      - name: Commit changes (if any)
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          python-version: '3.9'
-      - name: Install dependencies
-        run: pip install beautifulsoup4 requests
-      - name: Scrape data
-        run: |
-          import requests
-          from bs4 import BeautifulSoup
-          import json
+          message: "Update JSON with latest app version (if changed)"
+          branch: main  # Adjust the branch name if necessary
+          push: true  # Set to false if you don't want automatic pushes
 
-          # Carica il valore precedente dal file JSON (se esiste)
-          try:
-              with open('previous_value.json', 'r') as f:
-                  previous_value = json.load(f)['value']
-          except FileNotFoundError:
-              previous_value = None
-
-          url = 'https://ipogo.app'
-          response = requests.get(url)
-          soup = BeautifulSoup(response.content, 'html.parser')
-
-          element = soup.select_one('body > div.page-header.header-filter > div > div > div > div > small:nth-child(1)')
-          text = element.text.strip()
+      - name: Create a pull request (if automatic push is disabled)
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Update JSON with latest app version"
+          body: "Automatically updated JSON file with latest app information."
+          branch: update  # Adjust the branch name if necessary
+          commit-message: "Update JSON with latest app version (if changed)"
