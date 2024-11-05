@@ -18,26 +18,24 @@ jobs:
 
       - name: Run Python script
         run: python json_analyze.py  # Replace with your script name
-        # Capture the script's exit code
-
-      - name: Check Script Exit Code
+        capture-output: true
+      - name: Check Script Output
         run: |
-          if [[ $? -eq 1 ]]; then
-            echo "No change. Skipping commit and pull request."
+          if [[ $(echo "${{ steps.run_script.stdout }}" | grep -c "Script execution successful") -gt 0 ]]; then
+            echo "Script successful. Skipping commit and pull request."
           else
-            echo "Change detected. Continuing with commit and pull request."
+            echo "Script failed. Proceeding with commit and pull request."
           fi
         shell: bash
-
+      
       - name: Commit changes (if script succeeded)
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           message: "Update JSON with latest app version (if changed)"
           branch: main  # Adjust the branch name if necessary
           push: true   # Set to false if you don't want automatic pushes
-        # Only run this step if the previous step's exit code was 0 (success)
-        if: ${{ success() && steps.run_script.outputs == 0 }}
-
+        if: ${{ success() && steps.check_script_output.outputs.script_success == 'true' }}
+      
       - name: Create a pull request (if script succeeded and automatic push is disabled)
         uses: peter-evans/create-pull-request@v3
         with:
@@ -45,5 +43,4 @@ jobs:
           body: "Automatically updated JSON file with latest app information."
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
-        # Only run this step if both previous conditions are met
-        if: ${{ success() && steps.run_script.outputs == 0 && !github.event.inputs.push }}
+        if: ${{ success() && steps.check_script_output.outputs.script_success == 'true' && !github.event.inputs.push }}
