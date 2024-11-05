@@ -48,3 +48,6 @@ if getVersion() != json_file['apps'][0]['versions'][0]['version']:
     jadd = getlink()
     json_file['apps'][0]['versions'].insert(0, jadd)
     json_upd(json_file)
+    exit(0)
+else:
+    exit(1)
