@@ -1,33 +1,37 @@
 name: Update JSON File
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 */2 * * *'
+  workflow_dispatch:
+  # Schedule: Run the workflow daily at midnight (UTC)
+  schedule:
+    - cron: '0 */2 * * *'
 
 jobs:
-  update_json:
-    runs-on: ubuntu-latest
-    steps:
+  update_json:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
 
-      - name: Install Python dependencies (if needed)
-        run: pip install requests beautifulsoup4
-        
+      - name: Install Python dependencies (if needed)
+        # Adjust this step based on your actual dependencies (e.g., requests, bs4)
+        run: pip install requests beautifulsoup4
+
       - name: Run Python script
-        run: python json_analyze.py  # Replace with your script name
+        run: python json_analyze.py  # Replace with your script name
 
-      - name: Commit changes (if any)
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          message: "Update JSON with latest app version (if changed)"
-          branch: main  # Adjust the branch name if necessary
-          push: true  # Set to false if you don't want automatic pushes
+      - name: Commit changes (if any)
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          message: "Update JSON with latest app version (if changed)"
+          branch: main  # Adjust the branch name if necessary
+          push: true  # Set to false if you don't want automatic pushes
 
-      - name: Create a pull request (if automatic push is disabled)
-        uses: peter-evans/create-pull-request@v3
-        with:
-          title: "Update JSON with latest app version"
-          body: "Automatically updated JSON file with latest app information."
-          branch: update  # Adjust the branch name if necessary
-          commit-message: "Update JSON with latest app version (if changed)"
+      - name: Create a pull request (if automatic push is disabled)
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Update JSON with latest app version"
+          body: "Automatically updated JSON file with latest app information."
+          branch: update  # Adjust the branch name if necessary
+          commit-message: "Update JSON with latest app version (if changed)"
+        # Uncomment the following line if you want automatic pull request creation
+        # if: steps.commit.outputs.committed == 'false'
