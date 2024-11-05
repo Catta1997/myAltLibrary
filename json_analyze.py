@@ -1,8 +1,11 @@
+import requests
+from bs4 import BeautifulSoup
 import json
 import requests
 import datetime
 from bs4 import BeautifulSoup
 import re
+
 def getlink() -> json:
     x = requests.get('https://ipogo.app')
     soup = BeautifulSoup(x.text,"html.parser")
@@ -38,9 +41,24 @@ def get_Json() -> json:
         myjson.close()
         return data
 
+# Carica il valore precedente dal file JSON (se esiste)
+try:
+    with open('previous_value.json', 'r') as f:
+        previous_value = json.load(f)['value']
+except FileNotFoundError:
+    previous_value = None
 
-jadd = getlink()
-json_file = get_Json()
-if jadd['version'] != json_file['apps'][0]['versions'][0]['version']:
-    json_file['apps'][0]['versions'].insert(0, jadd)
-    json_upd(json_file)
+url = 'https://ipogo.app'
+response = requests.get(url)
+soup = BeautifulSoup(response.content, 'html.parser')
+
+element = soup.select_one('body > div.page-header.header-filter > div > div > div > div > small:nth-child(1)')
+text = element.text.strip()
+if text != previous_value:
+    with open('previous_value.json', 'w') as f:
+        json.dump({'value': text}, f)
+        jadd = getlink()
+        json_file = get_Json()
+        if jadd['version'] != json_file['apps'][0]['versions'][0]['version']:
+            json_file['apps'][0]['versions'].insert(0, jadd)
+            json_upd(json_file)
