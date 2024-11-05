@@ -1,9 +1,6 @@
 name: Update JSON File
 
 on:
-  push:
-    paths:
-      - 'previous_value.json'
   workflow_dispatch:
   # Schedule: Run the workflow daily at midnight (UTC)
   schedule:
