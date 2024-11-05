@@ -31,5 +31,6 @@ jobs:
         with:
           title: "Update JSON with latest app version"
           body: "Automatically updated JSON file with latest app information."
+          token: ${{ secrets.PAT }}
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
