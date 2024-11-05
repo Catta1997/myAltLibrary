@@ -33,5 +33,12 @@ jobs:
           body: "Automatically updated JSON file with latest app information."
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
-          run: |
-            ./.github/workflows/update_json.yml
+          script: |
+            const github = require('@actions/github');
+            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            await octokit.rest.actions.createWorkflowDispatch({
+              owner: github.context.repo.owner,
+              repo: github.context.repo.repo,
+              workflow_id: 'update_json.yml',
+              ref: github.context.ref,
+            });
