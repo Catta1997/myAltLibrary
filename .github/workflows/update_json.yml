@@ -18,20 +18,32 @@ jobs:
 
       - name: Run Python script
         run: python json_analyze.py  # Replace with your script name
+        # Capture the script's exit code
 
-      - name: Commit changes (if any)
+      - name: Check Script Exit Code
+        run: |
+          if [[ $? -eq 1 ]]; then
+            echo "No change. Skipping commit and pull request."
+          else
+            echo "Change detected. Continuing with commit and pull request."
+          fi
+        shell: bash
+
+      - name: Commit changes (if script succeeded)
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           message: "Update JSON with latest app version (if changed)"
           branch: main  # Adjust the branch name if necessary
-          push: true  # Set to false if you don't want automatic pushes
+          push: true   # Set to false if you don't want automatic pushes
+        # Only run this step if the previous step's exit code was 0 (success)
+        if: ${{ success() && steps.run_script.outputs == 0 }}
 
-      - name: Create a pull request (if automatic push is disabled)
+      - name: Create a pull request (if script succeeded and automatic push is disabled)
         uses: peter-evans/create-pull-request@v3
         with:
           title: "Update JSON with latest app version"
           body: "Automatically updated JSON file with latest app information."
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
-        # Uncomment the following line if you want automatic pull request creation
-        # if: steps.commit.outputs.committed == 'false'
+        # Only run this step if both previous conditions are met
+        if: ${{ success() && steps.run_script.outputs == 0 && !github.event.inputs.push }}
