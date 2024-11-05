@@ -40,8 +40,3 @@ jobs:
           if text != previous_value:
               with open('previous_value.json', 'w') as f:
                   json.dump({'value': text}, f)
-              # Esegui l'action update_json.yml
-              run: |
-                  # Comando per eseguire l'action update_json.yml
-                  # Ad esempio, se l'action è in un altro repository:
-                  gh run -R owner/repo -f update_json
