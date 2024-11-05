@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   # Schedule: Run the workflow daily at midnight (UTC)
   schedule:
-    - cron: '38 * * * *'
+    - cron: '0 * * * *'
 
 jobs:
   update_json_version:
@@ -34,17 +34,16 @@ jobs:
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
       - name: Trigger Update JSON Workflow
-
-              uses: actions/github-script@v4
-              with:
-                script: |
-                  const github = require('@actions/github');
-                  const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-                  await octokit.rest.actions.createWorkflowDispatch({
-                    owner: github.context.repo.owner,
-                    repo: github.context.repo.repo,
-                    workflow_id: 'update_json.yml',
-                    ref: github.context.ref,
-                  });
-              env:
-                GITHUB_TOKEN: ${{ secrets.PAT }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const github = require('@actions/github');
+            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            await octokit.rest.actions.createWorkflowDispatch({
+              owner: github.context.repo.owner,
+              repo: github.context.repo.repo,
+              workflow_id: 'update_json.yml',
+              ref: github.context.ref,
+            });
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
