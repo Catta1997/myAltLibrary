@@ -1,0 +1,46 @@
+name: Scrape ipogo.app
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Ogni ora
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install beautifulsoup4 requests
+      - name: Scrape data
+        run: |
+          import requests
+          from bs4 import BeautifulSoup
+          import json
+
+          # Carica il valore precedente dal file JSON (se esiste)
+          try:
+              with open('previous_value.json', 'r') as f:
+                  previous_value = json.load(f)['value']
+          except FileNotFoundError:
+              previous_value = None
+
+          url = 'https://ipogo.app'
+          response = requests.get(url)
+          soup = BeautifulSoup(response.content, 'html.parser')
+
+          element = soup.select_one('body > div.page-header.header-filter > div > div > div > div > small:nth-child(1)')
+          text = element.text.strip()
+
+          # Confronta i valori e aggiorna il file JSON se necessario
+          if text != previous_value:
+              with open('previous_value.json', 'w') as f:
+                  json.dump({'value': text}, f)
+              # Esegui l'action update_json.yml
+              run: |
+                  # Comando per eseguire l'action update_json.yml
+                  # Ad esempio, se l'action è in un altro repository:
+                  gh run -R owner/repo -f update_json
