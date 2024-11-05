@@ -2,7 +2,6 @@ name: Update JSON File
 
 on:
   workflow_dispatch:
-  # Schedule: Run the workflow daily at midnight (UTC)
   schedule:
     - cron: '0 */2 * * *'
 
@@ -13,13 +12,25 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install Python dependencies (if needed)
-        # Adjust this step based on your actual dependencies (e.g., requests, bs4)
         run: pip install requests beautifulsoup4
 
-      - name: Run Python script
-        run: python json_analyze.py  # Replace with your script name
+      - name: Run Python script and capture output
+        id: run_script
+        run: |
+          output=$(python json_analyze.py)  # Replace with your script name
+          echo "script_output=$output" >> $GITHUB_ENV
+
+      - name: Determine if changes were made
+        id: check_output
+        run: |
+          if [[ "${{ env.script_output }}" == *"No Update Detected"* ]]; then
+            echo "changes_made=false" >> $GITHUB_ENV
+          else
+            echo "changes_made=true" >> $GITHUB_ENV
+          fi
 
       - name: Commit changes (if any)
+        if: env.changes_made == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           message: "Update JSON with latest app version (if changed)"
@@ -27,11 +38,10 @@ jobs:
           push: true  # Set to false if you don't want automatic pushes
 
       - name: Create a pull request (if automatic push is disabled)
+        if: env.changes_made == 'true'
         uses: peter-evans/create-pull-request@v3
         with:
           title: "Update JSON with latest app version"
           body: "Automatically updated JSON file with latest app information."
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
-        # Uncomment the following line if you want automatic pull request creation
-        # if: steps.commit.outputs.committed == 'false'
