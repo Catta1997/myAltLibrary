@@ -2,7 +2,6 @@ name: Update JSON File
 
 on:
   workflow_dispatch:
-  # Schedule: Run the workflow daily at midnight (UTC)
   schedule:
     - cron: '0 */2 * * *'
 
@@ -13,34 +12,36 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install Python dependencies (if needed)
-        # Adjust this step based on your actual dependencies (e.g., requests, bs4)
         run: pip install requests beautifulsoup4
 
-      - name: Run Python script
-        run: python json_analyze.py  # Replace with your script name
-        capture-output: true
+      - name: Run Python script and capture output
+        run: |
+          python json_analyze.py
+          echo "::set-output name=script_output::$(cat output.txt)"
+        shell: bash
+
       - name: Check Script Output
         run: |
-          if [[ $(echo "${{ steps.run_script.stdout }}" | grep -c "Script execution successful") -gt 0 ]]; then
-            echo "Script successful. Skipping commit and pull request."
+          if [[ $(echo "${{ steps.run_script_and_capture_output.outputs.script_output }}" | grep -c "Script execution successful") -gt 0 ]]; then
+            echo "::set-output name=script_success::true"
           else
-            echo "Script failed. Proceeding with commit and pull request."
+            echo "::set-output name=script_success::false"
           fi
         shell: bash
-      
+
       - name: Commit changes (if script succeeded)
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           message: "Update JSON with latest app version (if changed)"
-          branch: main  # Adjust the branch name if necessary
-          push: true   # Set to false if you don't want automatic pushes
+          branch: main
+          push: true
         if: ${{ success() && steps.check_script_output.outputs.script_success == 'true' }}
-      
+
       - name: Create a pull request (if script succeeded and automatic push is disabled)
         uses: peter-evans/create-pull-request@v3
         with:
           title: "Update JSON with latest app version"
           body: "Automatically updated JSON file with latest app information."
-          branch: update  # Adjust the branch name if necessary
+          branch: update
           commit-message: "Update JSON with latest app version (if changed)"
         if: ${{ success() && steps.check_script_output.outputs.script_success == 'true' && !github.event.inputs.push }}
