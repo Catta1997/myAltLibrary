@@ -33,3 +33,5 @@ jobs:
           body: "Automatically updated JSON file with latest app information."
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
+          run: |
+            gh workflow dispatch -y myAltLibrary/.github/workflows/update_json.yml
