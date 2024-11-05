@@ -6,23 +6,22 @@ import datetime
 from bs4 import BeautifulSoup
 import re
 
-def getlink() -> json:
-    x = requests.get('https://ipogo.app')
-    soup = BeautifulSoup(x.text,"html.parser")
+def getVersion() -> str:
     vers = ""
     for ver in soup.findAll('small', href=False):
         x = ver.text
         if ('iOS' in x):
             versione = re.findall(pattern=r"\((\d+\.\d+\.\d+)\)",string=x)
-            vers = str(versione[0])
+            return str(versione[0])
+
+def getlink() -> json:
     mylink = ""
     date = str(datetime.date.today())
-    print(type)
     for link in soup.findAll('a', href=True):
         if('.ipa' in link['href']):
             mylink = link['href']
             myjson= {}
-            myjson['version'] = vers
+            myjson['version'] = getVersion()
             myjson['date'] = date
             myjson['size'] = 146000000
             myjson['downloadURL'] = mylink
@@ -41,8 +40,11 @@ def get_Json() -> json:
         myjson.close()
         return data
 
-jadd = getlink()
+x = requests.get('https://ipogo.app')
+soup = BeautifulSoup(x.text,"html.parser")
+
 json_file = get_Json()
-if jadd['version'] != json_file['apps'][0]['versions'][0]['version']:
+if getVersion() != json_file['apps'][0]['versions'][0]['version']:
+    jadd = getlink()
     json_file['apps'][0]['versions'].insert(0, jadd)
     json_upd(json_file)
