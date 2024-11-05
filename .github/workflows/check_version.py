@@ -14,4 +14,7 @@ response = requests.get(url)
 soup = BeautifulSoup(response.content, 'html.parser')
 
 element = soup.select_one('body > div.page-header.header-filter > div > div > div > div > small:nth-child(1)')
-
+text = element.text.strip()
+if text != previous_value:
+              with open('previous_value.json', 'w') as f:
+                  json.dump({'value': text}, f)
