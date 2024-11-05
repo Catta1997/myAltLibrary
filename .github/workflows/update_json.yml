@@ -22,7 +22,7 @@ jobs:
 
       - name: Check Script Output
         run: |
-          if [[ $(echo "${{ steps.run_script_and_capture_output.outputs.script_output }}" | grep -c "Script execution successful") -gt 0 ]]; then
+          if [[ $(echo "${{ steps.run_script_and_capture_output.outputs.script_output }}" | grep -c "Update Detected") -gt 0 ]]; then
             echo "::set-output name=script_success::true"
           else
             echo "::set-output name=script_success::false"
