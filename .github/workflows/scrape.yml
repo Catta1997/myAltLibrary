@@ -1,6 +1,7 @@
 name: Scrape ipogo.app
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 * * * *'  # Ogni ora
 
