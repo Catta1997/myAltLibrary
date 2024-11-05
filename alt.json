@@ -1,80 +1,50 @@
-{
-    "name": "iPoGo",
-    "subtitle": "All my apps in one place.",
-    "description": "Updated iPoGo Version",
-    "iconURL": "https://static.wikia.nocookie.net/pokemongo/images/3/31/AppIcon_Season_16_Max_Out.png",
-    "headerURL": "https://static.wikia.nocookie.net/pokemongo/images/3/31/AppIcon_Season_16_Max_Out.png",
-    "tintColor": "#4185A9",
-    "featuredApps": [
-        "com.nianticlabs.pokemongo"
-    ],
-    "apps": [
-        {
-            "name": "iPoGo",
-            "bundleIdentifier": "com.nianticlabs.pokemongo",
-            "developerName": "Niantic",
-            "subtitle": "An awesome app.",
-            "localizedDescription": "This is an awesome app only available on AltStore.",
-            "iconURL": "https://static.wikia.nocookie.net/pokemongo/images/3/31/AppIcon_Season_16_Max_Out.png",
-            "tintColor": "#e34222",
-            "appPermissions": {
-                "entitlements": [
-                    "com.apple.security.application-groups",
-                    "com.apple.developer.healthkit",
-                    "com.apple.developer.associated-domains",
-                    "com.apple.developer.healthkit.background-delivery",
-                    "aps-environment",
-                    "com.apple.developer.healthkit.access",
-                    "com.apple.developer.applesignin"
-                ],
-                "privacy": {
-                    "NSBluetoothAlwaysUsageDescription": "Allows pairing to devices including peripherals and consoles.",
-                    "NSLocationAlwaysUsageDescription": "Set your device\u2019s location permissions to Always to collect Candy, hatch Eggs, and earn rewards\u2014even when Pok\u00e9mon GO isn\u2019t open!",
-                    "NSCameraUsageDescription": "Enabling this setting allows you to use AR when catching Pok\u00e9mon.",
-                    "NSUserTrackingUsageDescription": "If you enable this setting, your information can be used to deliver personalized ads to you regarding Pok\u00e9mon GO exclusive offers, promotions, and events.",
-                    "NSBluetoothPeripheralUsageDescription": "Allows for usage of the Pok\u00e9mon GO Plus",
-                    "NSPhotoLibraryAddUsageDescription": "In order to save pictures of encountered Pok\u00e9mon",
-                    "NSMotionUsageDescription": "Pok\u00e9mon GO requires your mobile device\u2019s motion permissions to be enabled in order to let you know when new Pok\u00e9mon are nearby.",
-                    "NSHealthUpdateUsageDescription": "Pok\u00e9mon GO needs your activity data to hatch Pok\u00e9mon eggs, help your Pok\u00e9mon find candies, and display total distance walked.",
-                    "NSHealthShareUsageDescription": "Pok\u00e9mon GO needs your activity data to hatch Pok\u00e9mon eggs, help your Pok\u00e9mon find candies, and display total distance walked.",
-                    "NSCalendarsUsageDescription": "In order to add Live Event calendar items",
-                    "NSMicrophoneUsageDescription": "not used",
-                    "NSLocationWhenInUseUsageDescription": "Pok\u00e9mon GO requires your mobile device\u2019s location permissions to be enabled in order to find Pok\u00e9mon and Pok\u00e9Stops near you.",
-                    "NSLocationAlwaysAndWhenInUseUsageDescription": "Set your device\u2019s location permissions to Always to collect Candy, hatch Eggs, and earn rewards\u2014even when Pok\u00e9mon GO isn\u2019t open!",
-                    "NSContactsUsageDescription": "Pok\u00e9mon GO needs to access and upload your contacts to our servers to send game invites and friend requests to people in your address book.",
-                    "NSPhotoLibraryUsageDescription": "In order to save pictures of encountered Pok\u00e9mon"
-                }
-            },
-            "versions": [
-                {
-                    "version": "0.337.0",
-                    "date": "2024-11-04",
-                    "size": 146000000,
-                    "downloadURL": "https://ipogo.app/download/ipogo-3.5.9.ipa",
-                    "minOSVersion": "15.0"
-                },
-                {
-                    "version": "0.335.1",
-                    "date": "2024-10-24",
-                    "size": 146000000,
-                    "downloadURL": "https://ipogo.app/download/ipogo-3.5.8.ipa",
-                    "minOSVersion": "15.0"
-                },
-                {
-                    "version": "0.335.0",
-                    "date": "2024-10-17",
-                    "size": 146000000,
-                    "downloadURL": "https://ipogo.app/download/ipogo-3.5.7.ipa",
-                    "minOSVersion": "15.0"
-                },
-                {
-                    "version": "0.333.0",
-                    "date": "2024-10-03",
-                    "size": 146000000,
-                    "downloadURL": "https://ipogo.app/download/ipogo-3.5.6.ipa",
-                    "minOSVersion": "15.0"
-                }
-            ]
-        }
-    ]
-}
+import requests
+from bs4 import BeautifulSoup
+import json
+import requests
+import datetime
+from bs4 import BeautifulSoup
+import re
+
+def getVersion() -> str:
+    vers = ""
+    for ver in soup.findAll('small', href=False):
+        x = ver.text
+        if ('iOS' in x):
+            versione = re.findall(pattern=r"\((\d+\.\d+\.\d+)\)",string=x)
+            return str(versione[0])
+
+def getlink() -> json:
+    mylink = ""
+    date = str(datetime.date.today())
+    for link in soup.findAll('a', href=True):
+        if('.ipa' in link['href']):
+            mylink = link['href']
+            myjson= {}
+            myjson['version'] = getVersion()
+            myjson['date'] = date
+            myjson['size'] = 146000000
+            myjson['downloadURL'] = mylink
+            myjson['minOSVersion'] = "15.0"
+            return (myjson)
+
+def json_upd(jsonfile):
+    f = open('alt.json','w')
+    json_object = json.dumps(jsonfile, indent=4)
+    f.write(json_object)
+    f.close()
+
+def get_Json() -> json:
+    with open('alt.json', 'r') as myjson:
+        data = json.load(myjson)
+        myjson.close()
+        return data
+
+x = requests.get('https://ipogo.app')
+soup = BeautifulSoup(x.text,"html.parser")
+
+json_file = get_Json()
+if getVersion() != json_file['apps'][0]['versions'][0]['version']:
+    jadd = getlink()
+    json_file['apps'][0]['versions'].insert(0, jadd)
+    json_upd(json_file)
