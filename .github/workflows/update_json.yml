@@ -2,7 +2,6 @@ name: Update JSON File
 
 on:
   workflow_dispatch:
-  # Schedule: Run the workflow daily at midnight (UTC)
   schedule:
     - cron: '0 */2 * * *'
 
@@ -10,13 +9,12 @@ jobs:
   update_json:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Install Python dependencies (if needed)
-        # Adjust this step based on your actual dependencies (e.g., requests, bs4)
         run: pip install requests beautifulsoup4
-
-      - name: Run Python script
+        
+      - name: Run Python script
         run: python json_analyze.py  # Replace with your script name
 
       - name: Commit changes (if any)
@@ -33,5 +31,3 @@ jobs:
           body: "Automatically updated JSON file with latest app information."
           branch: update  # Adjust the branch name if necessary
           commit-message: "Update JSON with latest app version (if changed)"
-        # Uncomment the following line if you want automatic pull request creation
-        # if: steps.commit.outputs.committed == 'false'
