@@ -47,6 +47,13 @@
             },
             "versions": [
                 {
+                    "version": "0.345.0",
+                    "date": "2025-01-23",
+                    "size": 146000000,
+                    "downloadURL": "https://ipogo.app/download/ipogo-3.6.7.ipa",
+                    "minOSVersion": "15.0"
+                },
+                {
                     "version": "0.343.2",
                     "date": "2025-01-10",
                     "size": 146000000,
